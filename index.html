@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chamidu Manthilaka — IT Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#050C18;
+  --bg2:#0B1629;
+  --card:#0E1C38;
+  --gold:#F5C518;
+  --gold-dim:rgba(245,197,24,0.1);
+  --gold-glow:rgba(245,197,24,0.22);
+  --text:#E6EDF8;
+  --muted:#7B90B8;
+  --border:rgba(255,255,255,0.07);
+  --radius:12px;
+  --ease:0.3s ease;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+  overflow-x:hidden;
+}
+
+/* ======= SCROLLBAR ======= */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bg2);border-radius:3px}
+
+/* ======= NAV ======= */
+nav{
+  position:fixed;top:0;width:100%;z-index:100;
+  padding:1rem 2.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:background var(--ease),border-color var(--ease);
+  border-bottom:1px solid transparent;
+}
+nav.scrolled{
+  background:rgba(5,12,24,0.88);
+  backdrop-filter:blur(14px);
+  border-bottom-color:var(--border);
+}
+.nav-logo{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;font-size:1.2rem;
+  color:var(--gold);text-decoration:none;
+  letter-spacing:-0.02em;
+}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  color:var(--muted);text-decoration:none;
+  font-size:0.85rem;font-weight:500;
+  letter-spacing:0.02em;
+  transition:color var(--ease);
+}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+
+/* ======= HERO BG ======= */
+.hero-bg{
+  position:fixed;inset:0;z-index:-1;
+  background:
+    radial-gradient(ellipse 70% 55% at 65% 35%, rgba(245,197,24,0.045) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 5% 85%, rgba(15,40,100,0.25) 0%, transparent 65%),
+    var(--bg);
+}
+.hero-bg::after{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,0.035) 1px,transparent 1px);
+  background-size:32px 32px;
+  mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,black 0%,transparent 100%);
+}
+
+/* ======= SECTIONS ======= */
+section{padding:5.5rem 2.5rem;max-width:1080px;margin:0 auto}
+
+.section-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.72rem;color:var(--gold);
+  letter-spacing:0.18em;text-transform:uppercase;
+  margin-bottom:0.6rem;display:block;
+}
+
+h2.section-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(1.8rem,3.5vw,2.4rem);
+  font-weight:700;letter-spacing:-0.03em;
+  margin-bottom:2.75rem;
+}
+
+/* ======= HERO ======= */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  max-width:1080px;padding:6.5rem 2.5rem 4rem;
+}
+
+.hero-greeting{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.88rem;color:var(--gold);
+  margin-bottom:1.3rem;
+  opacity:0;animation:fadeUp 0.55s 0.15s forwards;
+}
+
+.hero-name{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2.8rem,6.5vw,5.2rem);
+  font-weight:700;letter-spacing:-0.045em;
+  line-height:1.03;margin-bottom:1.1rem;
+  opacity:0;animation:fadeUp 0.55s 0.35s forwards;
+}
+.hero-name .highlight{
+  background:linear-gradient(135deg,#F5C518,#F09000);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.hero-sub{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(1rem,2vw,1.3rem);font-weight:400;
+  color:var(--muted);margin-bottom:1.4rem;
+  opacity:0;animation:fadeUp 0.55s 0.55s forwards;
+}
+.hero-sub span{color:var(--gold);font-weight:500}
+
+.hero-desc{
+  font-size:0.97rem;color:var(--muted);
+  max-width:560px;line-height:1.85;margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp 0.55s 0.75s forwards;
+}
+
+.hero-btns{
+  display:flex;gap:0.85rem;flex-wrap:wrap;
+  opacity:0;animation:fadeUp 0.55s 0.95s forwards;
+}
+
+.btn{
+  display:inline-flex;align-items:center;gap:0.45rem;
+  padding:0.72rem 1.6rem;border-radius:8px;
+  font-weight:600;font-size:0.875rem;
+  text-decoration:none;cursor:pointer;border:none;
+  transition:all var(--ease);
+}
+.btn-gold{
+  background:var(--gold);color:#050C18;
+}
+.btn-gold:hover{
+  background:#ffd84e;transform:translateY(-2px);
+  box-shadow:0 8px 28px var(--gold-glow);
+}
+.btn-ghost{
+  background:transparent;color:var(--text);
+  border:1px solid var(--border);
+}
+.btn-ghost:hover{
+  border-color:rgba(255,255,255,0.18);
+  background:rgba(255,255,255,0.04);
+  transform:translateY(-2px);
+}
+
+/* ======= DIVIDER ======= */
+hr{border:none;border-top:1px solid var(--border);max-width:1080px;margin:0 auto}
+
+/* ======= ABOUT ======= */
+#about{display:grid;grid-template-columns:1.1fr 0.9fr;gap:4.5rem;align-items:start}
+.about-text p{color:var(--muted);font-size:0.96rem;line-height:1.88}
+.about-text p+p{margin-top:1rem}
+
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:0.5rem}
+.stat-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.4rem 1.2rem;
+  text-align:center;transition:border-color var(--ease),transform var(--ease);
+}
+.stat-box:hover{border-color:rgba(245,197,24,0.22);transform:translateY(-3px)}
+.stat-val{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:2rem;font-weight:700;color:var(--gold);
+  display:block;line-height:1;margin-bottom:0.5rem;
+}
+.stat-key{font-size:0.78rem;color:var(--muted);letter-spacing:0.04em}
+
+/* ======= SKILLS ======= */
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.25rem}
+.skill-group h3{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.8rem;font-weight:600;
+  color:var(--gold);letter-spacing:0.12em;
+  text-transform:uppercase;margin-bottom:0.9rem;
+}
+.tag-wrap{display:flex;flex-wrap:wrap;gap:0.45rem}
+.tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.76rem;padding:0.35rem 0.72rem;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:6px;color:var(--muted);
+  transition:all var(--ease);cursor:default;
+}
+.tag:hover{
+  color:var(--text);
+  border-color:rgba(245,197,24,0.3);
+  background:var(--gold-dim);
+}
+
+/* ======= PROJECTS ======= */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.proj-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.85rem;
+  position:relative;overflow:hidden;
+  transition:transform 0.35s ease,border-color 0.35s ease,box-shadow 0.35s ease;
+}
+.proj-card::before{
+  content:'';position:absolute;inset-x:0;top:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),rgba(245,197,24,0));
+  opacity:0;transition:opacity var(--ease);
+}
+.proj-card:hover{
+  transform:translateY(-7px);
+  border-color:rgba(245,197,24,0.18);
+  box-shadow:0 24px 48px rgba(0,0,0,0.32),0 0 0 1px rgba(245,197,24,0.08);
+}
+.proj-card:hover::before{opacity:1}
+
+.proj-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.68rem;color:var(--gold);
+  opacity:0.65;margin-bottom:0.8rem;display:block;
+}
+.proj-name{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1.15rem;font-weight:700;
+  color:var(--text);margin-bottom:0.2rem;
+}
+.proj-type{font-size:0.78rem;color:var(--gold);font-weight:500;margin-bottom:0.9rem}
+.proj-desc{font-size:0.865rem;color:var(--muted);line-height:1.78;margin-bottom:1.4rem}
+.proj-tech{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.2rem}
+.tech-chip{
+  font-family:'JetBrains Mono',monospace;font-size:0.7rem;
+  padding:0.22rem 0.58rem;
+  background:rgba(245,197,24,0.07);
+  border:1px solid rgba(245,197,24,0.18);
+  border-radius:4px;color:var(--gold);
+}
+.proj-link{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  font-size:0.82rem;color:var(--muted);
+  text-decoration:none;font-weight:500;
+  transition:color var(--ease);
+}
+.proj-link:hover{color:var(--gold)}
+
+/* ======= EDUCATION / TIMELINE ======= */
+.timeline{position:relative;padding-left:2.2rem}
+.timeline::before{
+  content:'';position:absolute;left:0;top:0.5rem;bottom:0;
+  width:1px;background:var(--border);
+}
+.tl-item{position:relative;margin-bottom:2.4rem}
+.tl-item::before{
+  content:'';position:absolute;
+  left:-2.45rem;top:0.38rem;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 0 4px rgba(245,197,24,0.12);
+}
+.tl-date{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.72rem;color:var(--gold);
+  margin-bottom:0.35rem;display:block;
+}
+.tl-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1.02rem;font-weight:600;
+  color:var(--text);margin-bottom:0.15rem;
+}
+.tl-sub{font-size:0.86rem;color:var(--muted)}
+.tl-note{font-size:0.78rem;color:var(--muted);margin-top:0.25rem;opacity:0.8}
+
+/* ======= EXTRAS ======= */
+.extras-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.extra-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.4rem;
+  transition:border-color var(--ease),transform var(--ease);
+}
+.extra-card:hover{border-color:rgba(245,197,24,0.18);transform:translateY(-3px)}
+.extra-icon{font-size:1.5rem;margin-bottom:0.75rem;display:block}
+.extra-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.95rem;font-weight:600;
+  color:var(--text);margin-bottom:0.4rem;
+}
+.extra-desc{font-size:0.82rem;color:var(--muted);line-height:1.7}
+
+/* ======= CONTACT ======= */
+#contact{text-align:center}
+.contact-lead{
+  color:var(--muted);font-size:0.97rem;
+  max-width:480px;margin:0 auto 2.5rem;
+  line-height:1.85;
+}
+.contact-row{
+  display:flex;justify-content:center;
+  gap:0.85rem;flex-wrap:wrap;margin-top:2.25rem;
+}
+.contact-chip{
+  display:flex;align-items:center;gap:0.5rem;
+  padding:0.58rem 1.15rem;
+  border-radius:8px;border:1px solid var(--border);
+  color:var(--muted);text-decoration:none;
+  font-size:0.82rem;font-weight:500;
+  transition:all var(--ease);
+}
+.contact-chip:hover{
+  color:var(--text);border-color:rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.04);transform:translateY(-2px);
+}
+
+/* ======= FOOTER ======= */
+footer{
+  border-top:1px solid var(--border);
+  padding:2.25rem 2.5rem;
+  text-align:center;
+  font-size:0.78rem;color:var(--muted);
+}
+footer strong{color:var(--gold)}
+
+/* ======= REVEAL ANIMATIONS ======= */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ======= RESPONSIVE ======= */
+@media(max-width:900px){
+  #about{grid-template-columns:1fr;gap:2.5rem}
+  .skills-grid{grid-template-columns:1fr}
+  .extras-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  nav{padding:0.9rem 1.25rem}
+  .nav-links{display:none}
+  section{padding:4rem 1.25rem}
+  #hero{padding:6rem 1.25rem 3rem}
+  .extras-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important}
+}
+</style>
+</head>
+<body>
+
+<div class="hero-bg"></div>
+
+<!-- ===== NAV ===== -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">CM</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div>
+    <p class="hero-greeting">Hello, I am</p>
+    <h1 class="hero-name">
+      <span class="highlight">Chamidu</span><br>Manthilaka
+    </h1>
+    <p class="hero-sub">IT Undergraduate &nbsp;·&nbsp; <span>Full Stack Developer</span></p>
+    <p class="hero-desc">
+      Second-year BSc (Hons) IT student at SLIIT Kandy, passionate about building web applications
+      across the full stack — from MERN to Java Servlets. Seeking an internship in the IT industry
+      to grow and contribute.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-gold">View My Projects</a>
+      <a href="mailto:chamidumanthilaka888@gmail.com" class="btn btn-ghost">Get In Touch</a>
+      <a href="https://github.com/chamidu123c" target="_blank" rel="noopener" class="btn btn-ghost">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <div class="about-text reveal">
+    <h2 class="section-title">About Me</h2>
+    <p>
+      I'm an enthusiastic Information Technology undergraduate at SLIIT Kandy, having completed my
+      second year of the BSc (Hons) program. My passion lies in full-stack web development — from crafting
+      responsive, user-friendly interfaces to building robust back-end systems.
+    </p>
+    <p>
+      Through academic projects, I've built production-grade applications using the MERN stack, Java
+      Servlets/JSP, and PHP, alongside hands-on experience with MySQL and MongoDB. I thrive in team
+      environments and have led group projects from planning through to delivery.
+    </p>
+    <p>
+      Outside of coding, I practice karate — a discipline that's sharpened my focus, perseverance, and
+      ability to perform under pressure. I'm native in Sinhala with intermediate English proficiency.
+    </p>
+  </div>
+  <div class="reveal">
+    <div class="stats-grid">
+      <div class="stat-box">
+        <span class="stat-val">2nd</span>
+        <span class="stat-key">Year at SLIIT</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-val">3</span>
+        <span class="stat-key">Projects Built</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-val">10+</span>
+        <span class="stat-key">Technologies</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-val">✓</span>
+        <span class="stat-key">Internship Ready</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ===== SKILLS ===== -->
+<section id="skills">
+  <span class="section-label reveal"></span>
+  <h2 class="section-title reveal">Skills &amp; Technologies</h2>
+  <div class="skills-grid">
+    <div class="skill-group reveal">
+      <h3>Languages</h3>
+      <div class="tag-wrap">
+        <span class="tag">Java</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">PHP</span>
+        <span class="tag">C</span>
+        <span class="tag">C++</span>
+        <span class="tag">SQL</span>
+        <span class="tag">HTML5</span>
+        <span class="tag">CSS3</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <h3>Frameworks &amp; Libraries</h3>
+      <div class="tag-wrap">
+        <span class="tag">React.js</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">Express.js</span>
+        <span class="tag">Java Servlets</span>
+        <span class="tag">JSP</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <h3>Databases &amp; DevOps</h3>
+      <div class="tag-wrap">
+        <span class="tag">MongoDB</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">Git</span>
+        <span class="tag">GitHub</span>
+        <span class="tag">Apache Tomcat</span>
+        <span class="tag">VS Code</span>
+        <span class="tag">Microsoft 365</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <h3>Core Competencies</h3>
+      <div class="tag-wrap">
+        <span class="tag">OOP</span>
+        <span class="tag">Database Management</span>
+        <span class="tag">Networking</span>
+        <span class="tag">Problem Solving</span>
+        <span class="tag">Team Leadership</span>
+        <span class="tag">Analytical Thinking</span>
+        <span class="tag">Time Management</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ===== PROJECTS ===== -->
+<section id="projects">
+  <span class="section-label reveal"></span>
+  <h2 class="section-title reveal">Projects</h2>
+  <div class="proj-grid">
+
+    <!-- AgroLanka -->
+    <div class="proj-card reveal">
+      <span class="proj-num">01 / AgroLanka</span>
+      <div class="proj-name">AgroLanka</div>
+      <div class="proj-type">MERN Stack Web Application</div>
+      <p class="proj-desc">
+        A full-stack agriculture management system with user authentication, role-based dashboards,
+        CRUD operations, and a fully responsive React frontend connected to a Node/Express REST API
+        and MongoDB database.
+      </p>
+      <div class="proj-tech">
+        <span class="tech-chip">MongoDB</span>
+        <span class="tech-chip">Express.js</span>
+        <span class="tech-chip">React.js</span>
+        <span class="tech-chip">Node.js</span>
+      </div>
+      <!-- UPDATE the href below with your actual repo link -->
+      <a href="https://github.com/chamidu123c" target="_blank" rel="noopener" class="proj-link">
+        View on GitHub &nbsp;↗
+      </a>
+    </div>
+
+    <!-- Online Tour Guide -->
+    <div class="proj-card reveal">
+      <span class="proj-num">02 / Tour Guide System</span>
+      <div class="proj-name">Online Tour Guide System</div>
+      <div class="proj-type">Java JSP Servlet Web Application</div>
+      <p class="proj-desc">
+        A full-stack tour booking and management platform with role-based dashboards for Admin,
+        Tourist, Guide, and Transport Manager. Features CRUD operations, user authentication, and
+        complete booking management.
+      </p>
+      <div class="proj-tech">
+        <span class="tech-chip">Java Servlets</span>
+        <span class="tech-chip">JSP</span>
+        <span class="tech-chip">MySQL</span>
+        <span class="tech-chip">Apache Tomcat</span>
+      </div>
+      <!-- UPDATE the href below with your actual repo link -->
+      <a href="https://github.com/chamidu123c" target="_blank" rel="noopener" class="proj-link">
+        View on GitHub &nbsp;↗
+      </a>
+    </div>
+
+    <!-- WellnessPath -->
+    <div class="proj-card reveal">
+      <span class="proj-num">03 / WellnessPath</span>
+      <div class="proj-name">WellnessPath</div>
+      <div class="proj-type">Wellness Management Web System</div>
+      <p class="proj-desc">
+        A web-based wellness management system featuring a customer dashboard, secure authentication
+        pages, profile management, and a password recovery flow — built with a clean PHP backend.
+      </p>
+      <div class="proj-tech">
+        <span class="tech-chip">HTML5</span>
+        <span class="tech-chip">CSS3</span>
+        <span class="tech-chip">JavaScript</span>
+        <span class="tech-chip">PHP</span>
+      </div>
+      <!-- UPDATE the href below with your actual repo link -->
+      <a href="https://github.com/chamidu123c" target="_blank" rel="noopener" class="proj-link">
+        View on GitHub &nbsp;↗
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<hr>
+
+<!-- ===== EDUCATION ===== -->
+<section id="education">
+  <span class="section-label reveal"></span>
+  <h2 class="section-title reveal">Education</h2>
+  <div class="timeline">
+    <div class="tl-item reveal">
+      <span class="tl-date">2023 – Present</span>
+      <div class="tl-title">BSc (Hons) in Information Technology</div>
+      <div class="tl-sub">Sri Lanka Institute of Information Technology (SLIIT) · Kandy</div>
+      <div class="tl-note">Includes: Higher National Diploma in Information Technology</div>
+    </div>
+    <div class="tl-item reveal">
+      <span class="tl-date">2022 – 2023</span>
+      <div class="tl-title">G.C.E. Advanced Level</div>
+      <div class="tl-sub">Vidyartha College · Kandy, Sri Lanka</div>
+      <div class="tl-note">Accounting (B) · Economics (B) · Business Studies (C)</div>
+    </div>
+    <div class="tl-item reveal">
+      <span class="tl-date">2019</span>
+      <div class="tl-title">G.C.E. Ordinary Level</div>
+      <div class="tl-sub">Vidyartha College · Kandy, Sri Lanka</div>
+      <div class="tl-note">Mathematics (B) · English (B)</div>
+    </div>
+    <div class="tl-item reveal">
+      <span class="tl-date">Certificate</span>
+      <div class="tl-title">English Language Course — 6 Months</div>
+      <div class="tl-sub">National Institute of Co-operative Development</div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ===== EXTRAS ===== -->
+<section id="extras">
+  <span class="section-label reveal"></span>
+  <h2 class="section-title reveal">Beyond the Code</h2>
+  <div class="extras-grid">
+    <div class="extra-card reveal">
+      <span class="extra-icon">🥋</span>
+      <div class="extra-title">Karate</div>
+      <p class="extra-desc">Trained in karate and competed in programs, building discipline, self-confidence, and the habit of continuous improvement.</p>
+    </div>
+    <div class="extra-card reveal">
+      <span class="extra-icon">👥</span>
+      <div class="extra-title">Team Leader</div>
+      <p class="extra-desc">Led academic group projects — coordinating tasks, facilitating communication, and ensuring deliverables were met on time.</p>
+    </div>
+    <div class="extra-card reveal">
+      <span class="extra-icon">🌐</span>
+      <div class="extra-title">Languages</div>
+      <p class="extra-desc">Sinhala (Native) and English (Intermediate). Completed a 6-month English course at the National Institute of Co-operative Development.</p>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <span class="section-label reveal"></span>
+  <h2 class="section-title reveal">Get In Touch</h2>
+  <p class="contact-lead reveal">
+    I'm actively looking for an internship opportunity in the IT or banking industry.
+    If you have a position or just want to connect, feel free to reach out!
+  </p>
+  <a href="mailto:chamidumanthilaka888@gmail.com" class="btn btn-gold reveal">Say Hello ✉</a>
+  <div class="contact-row reveal">
+    <a href="mailto:chamidumanthilaka888@gmail.com" class="contact-chip">✉ chamidumanthilaka888@gmail.com</a>
+    <a href="tel:+94772602637" class="contact-chip">📱 +94 77 260 2637</a>
+    <a href="https://linkedin.com/in/chamidu-manthilaka-0497a7249" target="_blank" rel="noopener" class="contact-chip">in LinkedIn</a>
+    <a href="https://github.com/chamidu123c" target="_blank" rel="noopener" class="contact-chip">⌥ GitHub</a>
+  </div>
+</section>
+
+<footer>
+  <p>Designed &amp; Built by <strong>Chamidu Manthilaka</strong> &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; Kandy, Sri Lanka</p>
+</footer>
+
+<script>
+(function(){
+  var nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', function(){
+    nav.classList.toggle('scrolled', window.scrollY > 55);
+    var current = '';
+    document.querySelectorAll('section[id]').forEach(function(s){
+      if(window.scrollY >= s.offsetTop - 130) current = s.id;
+    });
+    document.querySelectorAll('.nav-links a').forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#'+current);
+    });
+  }, {passive:true});
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry, i){
+      if(entry.isIntersecting){
+        setTimeout(function(){ entry.target.classList.add('visible'); }, i * 75);
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
