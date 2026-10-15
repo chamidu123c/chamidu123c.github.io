@@ -86,16 +86,21 @@ All text on the site (name, summary, skills, projects, education and contact det
 
 ## Deployment
 
-The site is hosted on GitHub Pages from the `gh-pages` branch.
+### Option 1: GitHub Actions (Recommended - Automatic)
+
+The repository includes a GitHub Actions workflow in [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
+
+1. In your GitHub repository, navigate to **Settings → Pages**.
+2. Under **Build and deployment > Source**, select **GitHub Actions**.
+3. Every time you push to the `main` branch, your portfolio is automatically built and deployed to https://chamidu123c.github.io.
+
+### Option 2: Manual deployment with `gh-pages`
 
 ```bash
-git add .
-git commit -m "Update portfolio"
-git push
 npm run deploy
 ```
 
-In the repository, go to **Settings → Pages** and set the source to the `gh-pages` branch and the `/ (root)` folder.
+Then in **Settings → Pages**, set the source to **Deploy from a branch**, select `gh-pages` and `/ (root)`.
 
 ## Contact
 
